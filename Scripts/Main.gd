@@ -3,11 +3,12 @@ extends Node2D
 onready var BallLogic = $BallLogic
 onready var HarpoonLogic = $HarpoonLogic
 onready var FileHandler = $FileHandler
+onready var HUD = $HUD
 
-var P1 = Player.new()
-var P2 = Player.new()
+var P1
+var P2
 var players = []
-var total_tiles = Vector2(40, 20)# 16x16 tiles to make up the screen
+var total_tiles = Vector2(45, 25)# 16x16 tiles to make up the screen
 var CEILING = 0 * 16 
 var GROUND = (total_tiles.y-5) * 16
 var LEFT_WALL = 0 * 16
@@ -53,8 +54,8 @@ func load_level(level):
 
 func _physics_process(delta):
 	for lplayer in players:
-		lplayer.movement_logic(delta, 0, RIGHT_WALL)
-		if lplayer.should_attack():
+		lplayer.movement_logic(delta, 0, RIGHT_WALL, HUD)
+		if lplayer.should_attack(HUD):
 			HarpoonLogic.spawn_harpoon(lplayer, GROUND)
 		
 		if lplayer.current_harpoon: # move the harpoon up

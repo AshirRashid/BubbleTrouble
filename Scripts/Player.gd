@@ -16,14 +16,19 @@ func initialize(property2val):
 	for property in property2val:
 		self.set(property, property2val[property])
 
-func get_player_input()-> float:
+func get_key_input()-> float:
 	return Input.is_action_pressed(action2event_map['right']) as float - Input.is_action_pressed(action2event_map['left']) as float
 
-func should_attack():
-	return Input.is_action_just_pressed(action2event_map['attack'])
+func should_attack(hud):
+	var touch_input = hud.get_node('shoot').pressed as float
+	var key_input = Input.is_action_just_pressed(action2event_map['attack']) as float
+	return min(1, touch_input+key_input)
 
-func movement_logic(delta, left_bound, right_bound):
+func movement_logic(delta, left_bound, right_bound, hud):
 	if self.active:
-		self.x_vel = get_player_input() * self.SPEED
+		self.x_vel = min(1, get_touch_input(hud)+get_key_input()) * self.SPEED
 		self.pos += Vector2(self.x_vel, 0) * delta
 		self.pos.x = clamp(self.pos.x, left_bound, right_bound-size.x)
+
+func get_touch_input(lhud):
+	return lhud.get_node('right').pressed as float - lhud.get_node('left').pressed as float

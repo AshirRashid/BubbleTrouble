@@ -6,6 +6,9 @@
 
 [node name="Main" type="Node2D"]
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_horizontal_guides_": [ 344.0 ]
+}
 
 [node name="BallLogic" type="Node2D" parent="."]
 script = ExtResource( 2 )
@@ -14,3 +17,35 @@ script = ExtResource( 2 )
 script = ExtResource( 3 )
 
 [node name="FileHandler" type="Node2D" parent="."]
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="left" type="Button" parent="HUD"]
+margin_left = 32.0
+margin_top = 280.0
+margin_right = 96.0
+margin_bottom = 344.0
+text = "<"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="right" type="Button" parent="HUD"]
+margin_left = 624.0
+margin_top = 280.0
+margin_right = 688.0
+margin_bottom = 344.0
+text = ">"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="shoot" type="Button" parent="HUD"]
+margin_left = 656.0
+margin_top = 128.0
+margin_right = 712.0
+margin_bottom = 176.0
+text = "Shoot"
+__meta__ = {
+"_edit_use_anchors_": false
+}

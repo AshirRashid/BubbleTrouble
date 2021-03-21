@@ -33,13 +33,13 @@ func is_ball_to_rect_collision(lball_pos, lball_r, lrect):
 func radius2h(r, screen_h):
 	var h
 	if r >= 20:
-		h = screen_h
-	elif r >= 15:
 		h = 0.9*screen_h
-	elif r >= 10:
+	elif r >= 15:
 		h = 0.7*screen_h
-	else:
+	elif r >= 10:
 		h = 0.5*screen_h
+	else:
+		h = 0.3*screen_h
 	return h
 
 func radius2y_vel(r, g, screen_h):
