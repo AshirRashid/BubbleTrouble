@@ -1,4 +1,5 @@
-extends Node
+extends Resource
+class_name Harpoon
 
 var pos: Vector2
 var size: Vector2

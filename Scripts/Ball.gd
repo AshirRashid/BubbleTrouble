@@ -1,4 +1,5 @@
-extends Node2D
+extends Resource
+class_name Ball
 
 var vel: Vector2
 var pos: Vector2
