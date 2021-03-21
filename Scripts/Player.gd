@@ -22,7 +22,7 @@ func get_player_input()-> float:
 func should_attack():
 	return Input.is_action_just_pressed(action2event_map['attack'])
 
-func physics_logic(delta, left_bound, right_bound):
+func movement_logic(delta, left_bound, right_bound):
 	if self.active:
 		self.x_vel = get_player_input() * self.SPEED
 		self.pos += Vector2(self.x_vel, 0) * delta
