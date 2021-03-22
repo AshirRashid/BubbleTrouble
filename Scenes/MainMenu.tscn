@@ -1,8 +1,301 @@
-[gd_scene format=2]
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Scripts/MainMenu.gd" type="Script" id=1]
+[ext_resource path="res://Drag/Drag.tscn" type="PackedScene" id=2]
 
 [node name="MainMenu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Settings" type="Button" parent="."]
+margin_left = 670.0
+margin_right = 718.0
+margin_bottom = 48.0
+text = "S"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Play" type="Button" parent="."]
+margin_left = 280.0
+margin_top = 200.0
+margin_right = 440.0
+margin_bottom = 290.0
+text = "P"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Name" type="Label" parent="."]
+visible = false
+margin_left = 300.0
+margin_top = 100.0
+margin_right = 397.0
+margin_bottom = 114.0
+text = "Bubble Trouble"
+align = 1
+valign = 1
+
+[node name="PlayerSelection" type="Popup" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="CR" type="ColorRect" parent="PlayerSelection"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.298039, 0.298039, 0.298039, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="V" type="VBoxContainer" parent="PlayerSelection"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_stretch_ratio = 0.2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="PlayerSelection/V"]
+margin_right = 720.0
+margin_bottom = 79.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.2
+text = "Player Selection"
+align = 1
+valign = 1
+
+[node name="MC" type="MarginContainer" parent="PlayerSelection/V"]
+margin_top = 83.0
+margin_right = 720.0
+margin_bottom = 400.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.8
+custom_constants/margin_right = 250
+custom_constants/margin_top = 20
+custom_constants/margin_left = 250
+custom_constants/margin_bottom = 200
+
+[node name="V" type="VBoxContainer" parent="PlayerSelection/V/MC"]
+margin_left = 250.0
+margin_top = 20.0
+margin_right = 470.0
+margin_bottom = 117.0
+
+[node name="1Player" type="Button" parent="PlayerSelection/V/MC/V"]
+margin_right = 220.0
+margin_bottom = 46.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "1"
+
+[node name="2Player" type="Button" parent="PlayerSelection/V/MC/V"]
+margin_top = 50.0
+margin_right = 220.0
+margin_bottom = 97.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "2"
+
+[node name="PSelBack" type="Button" parent="PlayerSelection"]
+margin_left = 670.0
+margin_right = 720.0
+margin_bottom = 50.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.1
+text = "Back"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LevelSelection" type="Popup" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CR" type="ColorRect" parent="LevelSelection"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.298039, 0.298039, 0.298039, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="V" type="VBoxContainer" parent="LevelSelection"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_stretch_ratio = 0.2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="LevelSelection/V"]
+margin_right = 720.0
+margin_bottom = 79.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.2
+text = "Level Selection"
+align = 1
+valign = 1
+
+[node name="MC" type="MarginContainer" parent="LevelSelection/V"]
+margin_top = 83.0
+margin_right = 720.0
+margin_bottom = 400.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.8
+
+[node name="G" type="GridContainer" parent="LevelSelection/V/MC"]
+margin_right = 720.0
+margin_bottom = 317.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.8
+columns = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LSelBack" type="Button" parent="LevelSelection"]
+margin_left = 670.0
+margin_right = 720.0
+margin_bottom = 50.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.1
+text = "Back"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SettingsMenu" type="Popup" parent="."]
+visible = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="CR" type="ColorRect" parent="SettingsMenu"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.298039, 0.298039, 0.298039, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="V" type="VBoxContainer" parent="SettingsMenu"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_stretch_ratio = 0.2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Configure Controls" type="Label" parent="SettingsMenu/V"]
+margin_right = 720.0
+margin_bottom = 79.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.2
+text = "Configure Controls"
+align = 1
+valign = 1
+
+[node name="G" type="Label" parent="SettingsMenu/V"]
+margin_top = 83.0
+margin_right = 720.0
+margin_bottom = 400.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.8
+
+[node name="left" type="Button" parent="SettingsMenu/V/G"]
+margin_left = 32.0
+margin_top = 197.0
+margin_right = 96.0
+margin_bottom = 261.0
+text = "<"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Drag" parent="SettingsMenu/V/G/left" instance=ExtResource( 2 )]
+visible = false
+
+[node name="right" type="Button" parent="SettingsMenu/V/G"]
+margin_left = 624.0
+margin_top = 197.0
+margin_right = 688.0
+margin_bottom = 261.0
+text = ">"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Drag" parent="SettingsMenu/V/G/right" instance=ExtResource( 2 )]
+visible = false
+margin_left = -592.0
+margin_right = -592.0
+
+[node name="shoot" type="Button" parent="SettingsMenu/V/G"]
+margin_left = 656.0
+margin_top = 45.0
+margin_right = 712.0
+margin_bottom = 93.0
+text = "Shoot"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Drag" parent="SettingsMenu/V/G/shoot" instance=ExtResource( 2 )]
+visible = false
+margin_left = -624.0
+margin_top = 152.0
+margin_right = -624.0
+margin_bottom = 152.0
+
+[node name="SettingsCancel" type="Button" parent="SettingsMenu"]
+margin_left = 656.0
+margin_top = 16.0
+margin_right = 706.0
+margin_bottom = 66.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.1
+text = "Cancel"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Save" type="Button" parent="SettingsMenu"]
+margin_left = 16.0
+margin_top = 16.0
+margin_right = 66.0
+margin_bottom = 66.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.1
+text = "Save"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="Settings" to="." method="_on_Settings_pressed"]
+[connection signal="pressed" from="Play" to="." method="_on_Play_pressed"]
+[connection signal="pressed" from="PlayerSelection/V/MC/V/1Player" to="." method="_on_1Player_pressed"]
+[connection signal="pressed" from="PlayerSelection/V/MC/V/2Player" to="." method="_on_2Player_pressed"]
+[connection signal="pressed" from="PlayerSelection/PSelBack" to="." method="_on_PSelBack_pressed"]
+[connection signal="pressed" from="LevelSelection/LSelBack" to="." method="_on_LSelBack_pressed"]
+[connection signal="pressed" from="SettingsMenu/SettingsCancel" to="." method="_on_SettingsCancel_pressed"]
+[connection signal="pressed" from="SettingsMenu/Save" to="." method="_on_Save_pressed"]

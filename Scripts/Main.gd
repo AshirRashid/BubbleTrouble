@@ -2,7 +2,6 @@ extends Node2D
 
 onready var BallLogic = $BallLogic
 onready var HarpoonLogic = $HarpoonLogic
-onready var FileHandler = $FileHandler
 onready var HUD = $HUD
 
 var P1
@@ -26,9 +25,15 @@ var harpoon_arr = []
 var ball_arr = []
 
 func _ready():
-	load_level(G.levels[1])
+	set_physics_process(false)
+
+func load_settings(settings_dict):
+	HUD.get_node("left").rect_global_position = settings_dict.left
+	HUD.get_node("right").rect_global_position = settings_dict.right
+	HUD.get_node("shoot").rect_global_position = settings_dict.shoot
 
 func load_level(level):
+	load_settings(G.get_settings_from_file())
 	P1 = Player.new()
 	P1.initialize({	'pos': Vector2(RIGHT_WALL/4, GROUND-P1.size.y)})
 	players = [P1]
@@ -51,6 +56,7 @@ func load_level(level):
 				BallLogic.spawn_ball(Vector2(x_pos, BallLogic.radius2h(r, GROUND)), r, Vector2(ball_info.x_vel, 0))
 		else:
 			BallLogic.spawn_ball(Vector2(RIGHT_WALL/2, BallLogic.radius2h(r, GROUND)), r, Vector2(ball_info.x_vel, 0))
+	self.set_physics_process(true)
 
 func _physics_process(delta):
 	for lplayer in players:
