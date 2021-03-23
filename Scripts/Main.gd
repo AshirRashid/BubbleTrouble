@@ -37,7 +37,7 @@ func load_level(level):
 	P1 = Player.new()
 	P1.initialize({	'pos': Vector2(RIGHT_WALL/4, GROUND-P1.size.y)})
 	players = [P1]
-	if players.size() > 1:
+	if level.player_num > 1:
 		P2 = Player.new()
 		P2.initialize({
 		'action2event_map': {	'right': 'd',
@@ -60,6 +60,7 @@ func load_level(level):
 
 func _physics_process(delta):
 	for lplayer in players:
+		print(lplayer)
 		lplayer.movement_logic(delta, 0, RIGHT_WALL, HUD)
 		if lplayer.should_attack(HUD):
 			HarpoonLogic.spawn_harpoon(lplayer, GROUND)
