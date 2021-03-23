@@ -6,7 +6,6 @@ var settings_file_name = 'settings'
 
 var levels = {# order is important for displaying in Level Seclection
 	1: {
-		'player_num': 1,# entered by the level selection menu 
 		'radius2num': {50: 1}
 	}
 }

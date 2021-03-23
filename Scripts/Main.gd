@@ -5,8 +5,6 @@ onready var HarpoonLogic = $HarpoonLogic
 onready var HUD = $HUD
 
 var P1
-var P2
-var players = []
 var total_tiles = Vector2(45, 25)# 16x16 tiles to make up the screen
 var CEILING = 0 * 16 
 var GROUND = (total_tiles.y-5) * 16
@@ -36,16 +34,6 @@ func load_level(level):
 	load_settings(G.get_settings_from_file())
 	P1 = Player.new()
 	P1.initialize({	'pos': Vector2(RIGHT_WALL/4, GROUND-P1.size.y)})
-	players = [P1]
-	if level.player_num > 1:
-		P2 = Player.new()
-		P2.initialize({
-		'action2event_map': {	'right': 'd',
-							'left': 'a',
-							'attack': 'q'},
-		'pos': Vector2(RIGHT_WALL/4, GROUND-P1.size.y),
-		'color': Color.black})
-		players.append(P2)
 	var r2num = level.radius2num
 	var r_arr = r2num.keys()
 	r_arr.sort(); r_arr.invert()
@@ -59,17 +47,15 @@ func load_level(level):
 	self.set_physics_process(true)
 
 func _physics_process(delta):
-	for lplayer in players:
-		print(lplayer)
-		lplayer.movement_logic(delta, 0, RIGHT_WALL, HUD)
-		if lplayer.should_attack(HUD):
-			HarpoonLogic.spawn_harpoon(lplayer, GROUND)
-		
-		if lplayer.current_harpoon: # move the harpoon up
-			lplayer.current_harpoon.size.y += harpoon_info.speed * delta
-			lplayer.current_harpoon.pos.y -= harpoon_info.speed * delta
-			if lplayer.current_harpoon.size.y > GROUND: # if harpoon.y > screen_size.y: delete it
-				lplayer.current_harpoon = null
+	P1.movement_logic(delta, 0, RIGHT_WALL, HUD)
+	if P1.should_attack(HUD):
+		HarpoonLogic.spawn_harpoon(P1, GROUND)
+	
+	if P1.current_harpoon: # move the harpoon up
+		P1.current_harpoon.size.y += harpoon_info.speed * delta
+		P1.current_harpoon.pos.y -= harpoon_info.speed * delta
+		if P1.current_harpoon.size.y > GROUND: # if harpoon.y > screen_size.y: delete it
+			P1.current_harpoon = null
 				
 	for lball in ball_arr:
 		# move the ball
@@ -86,26 +72,25 @@ func _physics_process(delta):
 			lball.vel.x *= -1
 			lball.pos.x = RIGHT_WALL-lball.radius# so it doesn't get stuck in the wall
 		
-		for lplayer in players:
-			if lplayer.current_harpoon:
-				if BallLogic.is_ball_to_rect_collision(lball.pos, lball.radius, Rect2(lplayer.current_harpoon.pos, lplayer.current_harpoon.size)):
-					HarpoonLogic.del_harpoon(lplayer)
-					BallLogic.split_ball(lball)
-					continue
-			if BallLogic.is_ball_to_rect_collision(lball.pos, lball.radius, Rect2(lplayer.pos, lplayer.size)):
-				print('player lost')
+		if P1.current_harpoon:
+			if BallLogic.is_ball_to_rect_collision(lball.pos, lball.radius, Rect2(P1.current_harpoon.pos, P1.current_harpoon.size)):
+				HarpoonLogic.del_harpoon(P1)
+				BallLogic.split_ball(lball)
+				continue
+		if BallLogic.is_ball_to_rect_collision(lball.pos, lball.radius, Rect2(P1.pos, P1.size)):
+			print('player lost')
 	if ball_arr.size() == 0:
 		print('player win')
 		
 	update()
 
 func _draw():
-	for lplayer in players:
-		draw_rect(Rect2(lplayer.pos, lplayer.size), lplayer.color)
-		if lplayer.current_harpoon:
+	if P1:
+		draw_rect(Rect2(P1.pos, P1.size), P1.color)
+		if P1.current_harpoon:
 			draw_rect(
-				Rect2(	lplayer.current_harpoon.pos,
-						lplayer.current_harpoon.size),
+				Rect2(	P1.current_harpoon.pos,
+						P1.current_harpoon.size),
 				Color.red)
 	for lball in ball_arr:
 		draw_circle(lball.pos, lball.radius, lball.color)
