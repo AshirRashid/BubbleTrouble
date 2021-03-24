@@ -1,6 +1,7 @@
 extends Node2D
 
 onready var Main = get_parent()
+var r_threshold2color = {20: Color('0D232E'), 15: Color('B3B088'), 10: Color('1B7F89'), 'else': Color('B59970')}
 
 func split_ball(ball_obj):
 	# delete ball_obj. Create 2 new balls. One of the balls has a -vel. Bothe have half the radius of ball_obj
@@ -51,10 +52,15 @@ func radius2y_vel(r, g, screen_h):
 
 func radius2color(r):
 	if r >= 20:
-		return Color.red
+		return r_threshold2color[20]
 	elif r >= 15:
-		return Color.orange
+		return r_threshold2color[15]
 	elif r >= 10:
-		return Color.yellow
+		return r_threshold2color[10]
 	else:
-		return Color.green
+		return r_threshold2color['else']
+
+func is_ball_to_circ_collision(lball_pos, lball_r, obs_pos, obs_r):
+	var obs_to_lball = lball_pos - obs_pos
+	if obs_to_lball.length() < lball_r + obs_r:
+		return obs_to_lball.normalized()

@@ -5,22 +5,18 @@ onready var HarpoonLogic = $HarpoonLogic
 onready var HUD = $HUD
 
 var P1
-var total_tiles = Vector2(45, 25)# 16x16 tiles to make up the screen
-var CEILING = 0 * 16 
-var GROUND = (total_tiles.y-5) * 16
-var LEFT_WALL = 0 * 16
-var RIGHT_WALL = total_tiles.x * 16
 var GRAVITY = 400
 
 var ball_info = {	'min_ball_radius': 5,
 					'x_vel': -60,
-					'max_h': GROUND,
+					'max_h': G.GROUND,
 					'start_radius': 20,
 					'after_split_y_vel': 150}
 var harpoon_info = {'thickness': 4,
 					'speed': 190}
 var harpoon_arr = []
 var ball_arr = []
+var circ_obstacle_arr = []#circular obstacles are dicts with center and radius properties
 
 func _ready():
 	set_physics_process(false)
@@ -33,28 +29,30 @@ func load_settings(settings_dict):
 func load_level(level):
 	load_settings(G.get_settings_from_file())
 	P1 = Player.new()
-	P1.initialize({	'pos': Vector2(RIGHT_WALL/4, GROUND-P1.size.y)})
+	P1.initialize({	'pos': Vector2(G.RIGHT_WALL/4, G.GROUND-P1.size.y)})
 	var r2num = level.radius2num
 	var r_arr = r2num.keys()
 	r_arr.sort(); r_arr.invert()
 	for r in r_arr:
 		if r2num[r] > 1:
-			var step = floor( (RIGHT_WALL-2*r)/(r2num[r]-1) )
-			for x_pos in range(r, RIGHT_WALL-r+1, step):
-				BallLogic.spawn_ball(Vector2(x_pos, BallLogic.radius2h(r, GROUND)), r, Vector2(ball_info.x_vel, 0))
+			var step = floor( (G.RIGHT_WALL-2*r)/(r2num[r]-1) )
+			for x_pos in range(r, G.RIGHT_WALL-r+1, step):
+				BallLogic.spawn_ball(Vector2(x_pos, BallLogic.radius2h(r, G.GROUND)), r, Vector2(ball_info.x_vel, 0))
 		else:
-			BallLogic.spawn_ball(Vector2(RIGHT_WALL/2, BallLogic.radius2h(r, GROUND)), r, Vector2(ball_info.x_vel, 0))
+			BallLogic.spawn_ball(Vector2(G.RIGHT_WALL/2, BallLogic.radius2h(r, G.GROUND)), r, Vector2(ball_info.x_vel, 0))
+			
+	circ_obstacle_arr = level.get('circ_obs2info_arr', [])
 	self.set_physics_process(true)
 
 func _physics_process(delta):
-	P1.movement_logic(delta, 0, RIGHT_WALL, HUD)
+	P1.movement_logic(delta, 0, G.RIGHT_WALL, HUD)
 	if P1.should_attack(HUD):
-		HarpoonLogic.spawn_harpoon(P1, GROUND)
+		HarpoonLogic.spawn_harpoon(P1, G.GROUND)
 	
 	if P1.current_harpoon: # move the harpoon up
 		P1.current_harpoon.size.y += harpoon_info.speed * delta
 		P1.current_harpoon.pos.y -= harpoon_info.speed * delta
-		if P1.current_harpoon.size.y > GROUND: # if harpoon.y > screen_size.y: delete it
+		if P1.current_harpoon.size.y > G.GROUND: # if harpoon.y > screen_size.y: delete it
 			P1.current_harpoon = null
 				
 	for lball in ball_arr:
@@ -62,15 +60,15 @@ func _physics_process(delta):
 		lball.vel.y += GRAVITY * delta
 		lball.pos += lball.vel * delta
 		# check collision and adjust position
-		if lball.pos.y + lball.radius > GROUND:
-			lball.pos.y = GROUND-lball.radius# so it doesn't get stuck in the wall
+		if lball.pos.y + lball.radius > G.GROUND:
+			lball.pos.y = G.GROUND-lball.radius# so it doesn't get stuck in the wall
 			lball.vel.y = -BallLogic.radius2y_vel(lball.radius, GRAVITY, ball_info.max_h)
 		if lball.pos.x - lball.radius < 0:
 			lball.vel.x *= -1
 			lball.pos.x = 0+lball.radius# so it doesn't get stuck in the wall
-		elif lball.pos.x + lball.radius > RIGHT_WALL:
+		elif lball.pos.x + lball.radius > G.RIGHT_WALL:
 			lball.vel.x *= -1
-			lball.pos.x = RIGHT_WALL-lball.radius# so it doesn't get stuck in the wall
+			lball.pos.x = G.RIGHT_WALL-lball.radius# so it doesn't get stuck in the wall
 		
 		if P1.current_harpoon:
 			if BallLogic.is_ball_to_rect_collision(lball.pos, lball.radius, Rect2(P1.current_harpoon.pos, P1.current_harpoon.size)):
@@ -78,9 +76,14 @@ func _physics_process(delta):
 				BallLogic.split_ball(lball)
 				continue
 		if BallLogic.is_ball_to_rect_collision(lball.pos, lball.radius, Rect2(P1.pos, P1.size)):
-			print('player lost')
+			G.game2menu()
+		for circ_obs in circ_obstacle_arr:
+			var normal_vec = BallLogic.is_ball_to_circ_collision(lball.pos, lball.radius, circ_obs.pos, circ_obs.r)
+			if normal_vec:
+				lball.vel = normal_vec * lball.vel.length()
+		
 	if ball_arr.size() == 0:
-		print('player win')
+		G.game2menu()
 		
 	update()
 
@@ -94,9 +97,11 @@ func _draw():
 				Color.red)
 	for lball in ball_arr:
 		draw_circle(lball.pos, lball.radius, lball.color)
+	for lcirc_obs in circ_obstacle_arr:
+		draw_circle(lcirc_obs.pos, lcirc_obs.r, lcirc_obs.color)
 	#draw ground
 	draw_rect(
-		Rect2(Vector2(0, GROUND),
-		Vector2(RIGHT_WALL, GROUND)),
-		Color.black,  (total_tiles.y*16) - GROUND
+		Rect2(Vector2(0, G.GROUND),
+		Vector2(G.RIGHT_WALL, G.GROUND)),
+		Color.black,  (G.TOTAL_TILES.y*16) - G.GROUND
 		)

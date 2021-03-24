@@ -10,12 +10,10 @@ func _ready():
 func _on_Play_pressed():
 	$LevelSelection.popup()
 
-func _on_LSelBack_pressed():
-	$LevelSelection.hide()
-
+func _on_Settings_pressed():
+	$SettingsMenu.popup()
 func _on_SettingsCancel_pressed():
 	$SettingsMenu.hide()
-
 func _on_Save_pressed():
 	G.set_settings_to_file({
 		'left': $SettingsMenu/V/G/left.rect_global_position,
@@ -24,12 +22,9 @@ func _on_Save_pressed():
 	})
 	$SettingsMenu.hide()
 
-func _on_Settings_pressed():
-	$SettingsMenu.popup()
-
-func show_level_selection():
-	$LevelSelection.popup()
-
 func level_selected(level_id):
 	var level_dict = G.levels[level_id]
 	G.menu2game(level_dict)
+func _on_LSelBack_pressed():
+	$LevelSelection.hide()
+
