@@ -7,6 +7,8 @@ func _on_Pause_pressed():
 	pause_menu.popup()
 
 func _on_Quit_pressed():
+	get_tree().paused = false# the game will be paused bec the quit button in the pause menu
+	pause_menu.hide()
 	G.game2menu()
 
 func _on_Continue_pressed():
