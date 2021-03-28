@@ -42,6 +42,9 @@ func load_level(level):
 			BallLogic.spawn_ball(Vector2(G.RIGHT_WALL/2, BallLogic.radius2h(r, G.GROUND)), r, Vector2(ball_info.x_vel, 0))
 			
 	circ_obstacle_arr = level.get('circ_obs2info_arr', [])
+	
+	# wait for countdown function to complete and then set the physics process
+	yield(HUD.count_down(), 'completed')
 	self.set_physics_process(true)
 
 func _physics_process(delta):

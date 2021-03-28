@@ -20,32 +20,37 @@ script = ExtResource( 3 )
 [node name="HUD" type="CanvasLayer" parent="."]
 script = ExtResource( 4 )
 
+[node name="Tween" type="Tween" parent="HUD"]
+
 [node name="left" type="Button" parent="HUD"]
-margin_left = 32.0
-margin_top = 280.0
-margin_right = 96.0
-margin_bottom = 344.0
+margin_left = 64.0
+margin_top = 240.0
+margin_right = 144.0
+margin_bottom = 320.0
 text = "<"
+flat = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="right" type="Button" parent="HUD"]
 margin_left = 624.0
-margin_top = 280.0
-margin_right = 688.0
-margin_bottom = 344.0
+margin_top = 240.0
+margin_right = 704.0
+margin_bottom = 320.0
 text = ">"
+flat = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="shoot" type="Button" parent="HUD"]
-margin_left = 656.0
-margin_top = 128.0
-margin_right = 712.0
-margin_bottom = 176.0
+margin_left = 624.0
+margin_top = 112.0
+margin_right = 704.0
+margin_bottom = 192.0
 text = "Shoot"
+flat = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -102,6 +107,20 @@ margin_bottom = 100.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Continue"
+
+[node name="CountDown" type="Label" parent="HUD"]
+visible = false
+margin_left = 320.0
+margin_top = 160.0
+margin_right = 344.0
+margin_bottom = 184.0
+rect_scale = Vector2( 3, 3 )
+text = "2"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="pressed" from="HUD/Pause" to="HUD" method="_on_Pause_pressed"]
 [connection signal="pressed" from="HUD/PauseMenu/MC/V/Quit" to="HUD" method="_on_Quit_pressed"]
 [connection signal="pressed" from="HUD/PauseMenu/MC/V/Continue" to="HUD" method="_on_Continue_pressed"]

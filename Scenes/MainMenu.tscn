@@ -105,6 +105,7 @@ __meta__ = {
 }
 
 [node name="SettingsMenu" type="Popup" parent="."]
+visible = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 
@@ -143,11 +144,12 @@ size_flags_vertical = 3
 size_flags_stretch_ratio = 0.8
 
 [node name="left" type="Button" parent="SettingsMenu/V/G"]
-margin_left = 32.0
-margin_top = 197.0
-margin_right = 96.0
-margin_bottom = 261.0
+margin_left = 64.0
+margin_top = 157.0
+margin_right = 144.0
+margin_bottom = 237.0
 text = "<"
+flat = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -156,11 +158,12 @@ __meta__ = {
 visible = false
 
 [node name="right" type="Button" parent="SettingsMenu/V/G"]
-margin_left = 624.0
-margin_top = 197.0
-margin_right = 688.0
-margin_bottom = 261.0
+margin_left = 632.0
+margin_top = 157.0
+margin_right = 712.0
+margin_bottom = 237.0
 text = ">"
+flat = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -171,11 +174,12 @@ margin_left = -592.0
 margin_right = -592.0
 
 [node name="shoot" type="Button" parent="SettingsMenu/V/G"]
-margin_left = 656.0
-margin_top = 45.0
-margin_right = 712.0
-margin_bottom = 93.0
+margin_left = 624.0
+margin_top = 29.0
+margin_right = 704.0
+margin_bottom = 109.0
 text = "Shoot"
+flat = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
