@@ -39,6 +39,7 @@ config/icon="res://icon.png"
 [autoload]
 
 G="*res://Scripts/G.gd"
+Utils="*res://Scripts/Utils.gd"
 
 [display]
 

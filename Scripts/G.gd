@@ -63,9 +63,18 @@ func get_settings_from_file():
 	return return_val
 
 func menu2game(level_dict):
-	get_tree().change_scene_to(Main)
-	yield(get_tree().create_timer(0.05), "timeout")
-	get_tree().current_scene.load_level(level_dict)
+	var tween = get_tree().current_scene.find_node('Tween')
+	var main_node = get_tree().current_scene.find_node('Main')
+	var mainmenu_node = get_tree().current_scene.find_node('MainMenu')
+#	tween.interpolate_property(mainmenu_node, 'modulate', mainmenu_node.modulate, Color.transparent, 0.6)
+#	tween.start()
+#	yield(tween, 'tween_all_completed')
+	mainmenu_node.layer = -5
+	print(mainmenu_node.layer)
+	main_node.load_level(level_dict)
+#	get_tree().change_scene_to(Main)
+#	yield(get_tree().create_timer(0.01), "timeout")
+#	get_tree().current_scene.load_level(level_dict)
 
 func game2menu():
 	get_tree().change_scene_to(MainMenu)

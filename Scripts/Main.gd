@@ -35,15 +35,22 @@ func load_level(level):
 	r_arr.sort(); r_arr.invert()
 	for r in r_arr:
 		if r2num[r] > 1:
-			var step = floor( (G.RIGHT_WALL-2*r)/(r2num[r]-1) )
-			for x_pos in range(r, G.RIGHT_WALL-r+1, step):
-				BallLogic.spawn_ball(Vector2(x_pos, BallLogic.radius2h(r, G.GROUND)), r, Vector2(ball_info.x_vel, 0))
+			var step = floor( G.RIGHT_WALL/r2num[r] )
+			for x_pos in range(step/2, G.RIGHT_WALL, step):
+				BallLogic.spawn_ball(
+					Vector2(x_pos,
+					G.GROUND-Utils.radius2h(r, G.GROUND)),
+					r, Vector2(ball_info.x_vel, 0))
 		else:
-			BallLogic.spawn_ball(Vector2(G.RIGHT_WALL/2, BallLogic.radius2h(r, G.GROUND)), r, Vector2(ball_info.x_vel, 0))
+			BallLogic.spawn_ball(
+				Vector2(G.RIGHT_WALL/2,
+				G.GROUND-Utils.radius2h(r, G.GROUND)),
+				r, Vector2(ball_info.x_vel, 0))
 			
 	circ_obstacle_arr = level.get('circ_obs2info_arr', [])
 	
 	# wait for countdown function to complete and then set the physics process
+	update()
 	yield(HUD.count_down(), 'completed')
 	self.set_physics_process(true)
 
@@ -65,7 +72,7 @@ func _physics_process(delta):
 		# check collision and adjust position
 		if lball.pos.y + lball.radius > G.GROUND:
 			lball.pos.y = G.GROUND-lball.radius# so it doesn't get stuck in the wall
-			lball.vel.y = -BallLogic.radius2y_vel(lball.radius, GRAVITY, ball_info.max_h)
+			lball.vel.y = -Utils.radius2y_vel(lball.radius, GRAVITY, ball_info.max_h)
 		if lball.pos.x - lball.radius < 0:
 			lball.vel.x *= -1
 			lball.pos.x = 0+lball.radius# so it doesn't get stuck in the wall
